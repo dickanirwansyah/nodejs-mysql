@@ -46,6 +46,31 @@ app.get('/person', (req, res, next) => {
     });
 });
 
+/** getId */
+app.get('/getid/:id', (req, res, next) => {
+    const id = req.params.id;
+    var query = "SELECT * FROM person WHERE id = '"+id+"'";
+
+    koneksi.query(query, function(err, result, fields){
+        koneksi.on('error', function(err){
+            console.log('[MYSQL - ERROR ] : ',err);
+        });
+        if(result && result.length){
+            res.end(JSON.stringify(result));
+        }else{
+            res.end(JSON.stringify({
+                info: 'data yang anda cari tidak ada',
+                code: 200
+            }));
+        }
+    });
+});
+
+/** insert data  */
+app.post('/create', (req, res, next) => {
+    
+});
+
 /** cari data person berdasarkan nama by name */
 app.post('/search', (req, res, next) => {
 
